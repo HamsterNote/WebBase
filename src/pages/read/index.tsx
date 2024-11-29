@@ -2,6 +2,7 @@ import { Layout, theme } from 'antd';
 import React from 'react';
 import { ReadPageHeader } from './header';
 import { getDocument, GlobalWorkerOptions } from 'pdfjs-dist';
+import Reader from '../../components/reader';
 
 GlobalWorkerOptions.workerSrc = new URL(
 	'pdfjs-dist/build/pdf.worker.min.mjs',
@@ -47,6 +48,44 @@ export const ReadPage: React.FC = () => {
 				overflow: 'auto',
 			}}
 		>
+			<Reader pages={[
+				{
+					height: 100,
+					width: 50,
+					texts: [{
+						content: 'test',
+						position: {
+							x: 0,
+							y: 0
+						},
+						id: 'test2',
+						style: {
+							top: '30px',
+							left: '100px',
+							fontSize: '20px',
+						}
+					}],
+					id: 'test1'
+				},
+				{
+					height: 100,
+					width: 100,
+					texts: [{
+						content: 'test',
+						position: {
+							x: 0,
+							y: 0
+						},
+						id: 'test4',
+						style: {
+							top: '100px',
+							left: '140px',
+							fontSize: '30px',
+						}
+					}],
+					id: 'test3'
+				}
+			]} />
 			<p>Content</p>
 			<input type="file" onChange={onUpload}/>
 		</Content>

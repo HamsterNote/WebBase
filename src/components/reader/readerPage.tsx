@@ -8,7 +8,7 @@ interface Props {
 }
 
 const ReaderPage: React.FC<Props> = (props: Props) => {
-	return <div className="hamster-note-reader-page">
+	return <div className="hamster-note-reader-page" style={{ paddingBottom: `${props.page.width / props.page.height * 100}%`, ...props.page.style }}>
 		{props.page.texts.map(text => {
 			return <ReaderText text={text} />;
 		})}

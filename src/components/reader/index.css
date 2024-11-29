@@ -1,4 +1,15 @@
 .hamster-note-reader {
-    height: 100%;
     width: 100%;
+    background-color: #eee;
+    padding: 10px;
+    .hamster-note-reader-page {
+        box-shadow: 0 0 10px #bbbbbb;
+        width: 100%;
+        background-color: #fff;
+        margin-bottom: 10px;
+        position: relative;
+    }
+    .hamster-note-reader-text {
+        position: absolute;
+    }
 }
