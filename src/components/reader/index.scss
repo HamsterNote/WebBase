@@ -1,12 +1,15 @@
+// 页面间隔
+$pageGap: 14px;
+
 .hamster-note-reader {
-    width: 100%;
+    width: 50%;
     background-color: #eee;
-    padding: 10px;
+    padding: $pageGap;
     .hamster-note-reader-page {
         box-shadow: 0 0 10px #bbbbbb;
         width: 100%;
         background-color: #fff;
-        margin-bottom: 10px;
+        margin-bottom: $pageGap;
         position: relative;
     }
     .hamster-note-reader-text {

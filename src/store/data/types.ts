@@ -1,12 +1,9 @@
 import { Page, Text } from '../../components/reader/types';
 
-export interface RelationPage extends Page {
+export interface NoteItem {
 	id: string;
-	texts: RelationText[];
-}
-
-export interface RelationText extends Text {
-	id: string;
+	cards: CardItem[];
+	relationDocument: string;
 }
 
 export interface CardItem {
@@ -16,6 +13,8 @@ export interface CardItem {
 	image: string;
 	selections: Selection[];
 	relations: Relation[];
+	id: string;
+	relationDocument?: string;
 }
 
 export enum RelationType {
@@ -44,6 +43,6 @@ export interface Relation {
 }
 
 export interface Selection {
-	pages: RelationPage[];
-	texts: RelationText[];
+	pages: Page[];
+	texts: Text[];
 }

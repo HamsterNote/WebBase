@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import './index.css';
-import { RelationText } from '../../store/data/types';
+import React from 'react';
+import './index.scss';
+import { Text } from './types';
 
 interface Props {
-	text: RelationText;
+	text: Text;
 }
 
 const ReaderText: React.FC<Props> = (props: Props) => {

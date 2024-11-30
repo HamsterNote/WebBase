@@ -1,16 +1,21 @@
 import React, { useState } from 'react';
-import './index.css';
+import './index.scss';
 import ReaderText from './readerText';
-import { RelationPage } from '../../store/data/types';
+import { Page } from './types';
 
 interface Props {
-	page: RelationPage;
+	page: Page;
 }
 
+/* 阅读器分页 */
 const ReaderPage: React.FC<Props> = (props: Props) => {
-	return <div className="hamster-note-reader-page" style={{ paddingBottom: `${props.page.width / props.page.height * 100}%`, ...props.page.style }}>
+	const onSelect = (evt: React.ChangeEvent<HTMLDivElement>) => {
+		console.log(evt);
+	}
+	// paddingBottom为了让页面等比宽高
+	return <div className="hamster-note-reader-page" onSelect={onSelect} style={{ paddingBottom: `${props.page.width / props.page.height * 100}%`, ...props.page.style }}>
 		{props.page.texts.map(text => {
-			return <ReaderText text={text} />;
+			return <ReaderText text={text} key={text.id} />;
 		})}
 	</div>;
 };
