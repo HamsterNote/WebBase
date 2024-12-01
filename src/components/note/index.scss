@@ -1,0 +1,15 @@
+.hamster-note-note {
+  overflow: auto;
+  width: 50%;
+  height: 100%;
+  .hamster-note-note-container {
+    position: relative;
+  }
+  .hamster-note-card {
+    position: absolute;
+    user-select: none;
+    &.dragging {
+      z-index: 2;
+    }
+  }
+}

@@ -21,7 +21,8 @@ export const ReadPage: React.FC = () => {
 		const currentId = store.getState().note.currentNote;
 		setCurrentNote(notes.find(note => note.id === currentId));
 		const unsubscribe = store.subscribe(() => {
-			setCurrentNote(notes.find(note => note.id === currentId));
+			const _notes = store.getState().note.notes;
+			setCurrentNote(_notes.find(note => note.id === currentId));
 		});
 		return () => unsubscribe();
 	}, []);

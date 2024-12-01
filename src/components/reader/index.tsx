@@ -3,6 +3,7 @@ import './index.scss';
 import { Document } from './types';
 import ReaderPage from './readerPage';
 import { addCard, store } from '../../store/data/note';
+import { DEFAULT_NOTE_HEIGHT, DEFAULT_NOTE_WIDTH } from '../consts/noteConsts';
 
 interface Props {
 	document: Document;
@@ -17,15 +18,21 @@ const Reader: React.FC<Props> = (props: Props) => {
 		const selection = window.getSelection();
 		const selectionContent = selection?.getRangeAt(0).cloneContents()?.textContent || '';
 		console.log(selectionContent);
-		store.dispatch(addCard({
-			id: `${selectionContent}-${cnt++}`,
-			title: '',
-			content: selectionContent,
-			isOCR: false,
-			image: '',
-			selections: [],
-			relations: [],
-		}));
+		if (selectionContent) {
+			store.dispatch(addCard({
+				id: `${selectionContent}-${cnt++}`,
+				title: '',
+				content: selectionContent,
+				isOCR: false,
+				image: '',
+				selections: [],
+				relations: [],
+				position: {
+					x: DEFAULT_NOTE_WIDTH / 2,
+					y: DEFAULT_NOTE_HEIGHT / 2,
+				}
+			}));
+		}
 	};
 	// useEffect(() => {
 	// 	const originSelectionChangeFunction = document.onselectionchange;

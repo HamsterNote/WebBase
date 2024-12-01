@@ -1,4 +1,5 @@
 import { Page, Text } from '../../components/reader/types';
+import { Number2 } from '../../types/Math';
 
 export interface NoteItem {
 	id: string;
@@ -15,6 +16,7 @@ export interface CardItem {
 	relations: Relation[];
 	id: string;
 	relationDocument?: string;
+	position?: Number2;
 }
 
 export enum RelationType {

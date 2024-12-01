@@ -1,5 +1,6 @@
 import { createSlice, configureStore } from '@reduxjs/toolkit';
 import { CardItem, NoteItem } from './types';
+import { Number2 } from '../../types/Math';
 
 const initialState: { notes: NoteItem[]; currentNote?: string; } = {
 	notes: [{
@@ -24,21 +25,35 @@ const noteSlice = createSlice({
 	reducers: {
 		setCurrentNote: (state, { payload }: { payload: string }) => {
 			state.currentNote = payload;
+			return state;
 		},
 		addCard: (state, { payload }: { payload: CardItem }) => {
 			const noteId = state.currentNote;
 			if (noteId) {
-				const note = state.notes.find(note => note.id === noteId);
+				const notes = state.notes;
+				const note = notes.find(note => note.id === noteId);
 				if (note) {
 					note.cards.push(payload);
-					state.notes = [...state.notes];
+				}
+			}
+		},
+		moveCard: (state, { payload }: { payload: { id: string; position: Number2 } }) => {
+			const noteId = state.currentNote;
+			if (noteId) {
+				const notes = state.notes;
+				const note = notes.find(note => note.id === noteId);
+				if (note) {
+					const card = note.cards.find(card => card.id === payload.id);
+					if (card) {
+						card.position = payload.position;
+					}
 				}
 			}
 		}
 	},
 });
 
-export const { setCurrentNote, addCard } = noteSlice.actions;
+export const { setCurrentNote, addCard, moveCard } = noteSlice.actions;
 
 export const store = configureStore({
 	reducer: {
