@@ -5,11 +5,15 @@
   .hamster-note-note-container {
     position: relative;
   }
-  .hamster-note-card {
+  .hamster-note-card-container {
     position: absolute;
-    user-select: none;
     &.dragging {
       z-index: 2;
+      opacity: 0.5;
+      cursor: grabbing;
     }
+  }
+  .hamster-note-card {
+    user-select: none;
   }
 }

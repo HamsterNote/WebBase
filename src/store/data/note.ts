@@ -1,5 +1,5 @@
-import { createSlice, configureStore } from '@reduxjs/toolkit';
-import { CardItem, NoteItem } from './types';
+import { configureStore, createSlice } from '@reduxjs/toolkit';
+import { CardItem, CardType, NoteItem } from './types';
 import { Number2 } from '../../types/Math';
 
 const initialState: { notes: NoteItem[]; currentNote?: string; } = {
@@ -13,7 +13,8 @@ const initialState: { notes: NoteItem[]; currentNote?: string; } = {
 			isOCR: false,
 			image: '',
 			selections: [],
-			relations: []
+			children: [],
+			type: CardType.MIND_MAP
 		}]
 	}],
 	currentNote: 'note1',

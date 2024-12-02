@@ -7,16 +7,24 @@ export interface NoteItem {
 	relationDocument: string;
 }
 
+export enum CardType {
+	// 脑图
+	MIND_MAP = 'mindMap',
+	// 框架
+	FRAME = 'frame',
+}
+
 export interface CardItem {
 	title: string;
 	content: string;
 	isOCR: boolean;
 	image: string;
 	selections: Selection[];
-	relations: Relation[];
+	children: CardItem[];
 	id: string;
 	relationDocument?: string;
 	position?: Number2;
+	type: CardType;
 }
 
 export enum RelationType {

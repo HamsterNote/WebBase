@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { NoteItem } from '../../store/data/types';
-import { NoteCard } from './card';
 import './index.scss';
 import { DEFAULT_NOTE_HEIGHT, DEFAULT_NOTE_WIDTH } from '../consts/noteConsts';
+import { NoteCard } from './card';
 
 interface Props {
 	note: NoteItem;

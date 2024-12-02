@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './index.scss';
 import { Document } from './types';
 import ReaderPage from './readerPage';
 import { addCard, store } from '../../store/data/note';
 import { DEFAULT_NOTE_HEIGHT, DEFAULT_NOTE_WIDTH } from '../consts/noteConsts';
+import { CardType } from '../../store/data/types';
 
 interface Props {
 	document: Document;
@@ -26,11 +27,12 @@ const Reader: React.FC<Props> = (props: Props) => {
 				isOCR: false,
 				image: '',
 				selections: [],
-				relations: [],
+				children: [],
 				position: {
 					x: DEFAULT_NOTE_WIDTH / 2,
 					y: DEFAULT_NOTE_HEIGHT / 2,
-				}
+				},
+				type: CardType.MIND_MAP,
 			}));
 		}
 	};
