@@ -40,7 +40,6 @@ export const NoteCard: React.FC<Props> = (props: Props) => {
 			}));
 		}
 		const onMouseUp = (evt: MouseEvent) => {
-			console.log(evt);
 			document.removeEventListener('mousemove', onMouseMove);
 			document.removeEventListener('mouseup', onMouseUp);
 			setIsDragging(false);
