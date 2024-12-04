@@ -1,9 +1,9 @@
 import { Page, Text } from '../../components/reader/types';
 import { Number2 } from '../../types/Math';
 
-export interface NoteItem {
+export interface NoteData {
 	id: string;
-	cards: CardItem[];
+	cardIds: string[];
 	relationDocument: string;
 }
 
@@ -14,17 +14,18 @@ export enum CardType {
 	FRAME = 'frame',
 }
 
-export interface CardItem {
+export interface CardData {
 	title: string;
 	content: string;
 	isOCR: boolean;
 	image: string;
 	selections: Selection[];
-	children: CardItem[];
+	childrenIds: string[];
 	id: string;
 	relationDocument?: string;
 	position?: Number2;
 	type: CardType;
+	noteId: string;
 }
 
 export enum RelationType {
@@ -52,7 +53,10 @@ export interface Relation {
 	items: RelationItem[];
 }
 
+export interface SelectionRect {}
+
 export interface Selection {
 	pages: Page[];
 	texts: Text[];
+	rect: SelectionRect[];
 }

@@ -2,15 +2,18 @@ import React from 'react';
 import './index.scss';
 import { Document } from './types';
 import ReaderPage from './readerPage';
-import { addCard, store } from '../../store/data/note';
+import { addCard, noteUIStore, noteDataStore, addNote, setCurrentNote } from '../../store/data/note';
 import { DEFAULT_NOTE_HEIGHT, DEFAULT_NOTE_WIDTH } from '../consts/noteConsts';
-import { CardType } from '../../store/data/types';
 
 interface Props {
 	document: Document;
 }
 
-let cnt = 0;
+noteDataStore.dispatch(addNote({
+	relationDocument: '',
+}));
+
+noteUIStore.dispatch(setCurrentNote(noteDataStore.getState().note.notes[0]?.id));
 
 /* 阅读器，接收公用数据格式，渲染*/
 const Reader: React.FC<Props> = (props: Props) => {
@@ -20,19 +23,17 @@ const Reader: React.FC<Props> = (props: Props) => {
 		const selectionContent = selection?.getRangeAt(0).cloneContents()?.textContent || '';
 		console.log(selectionContent);
 		if (selectionContent) {
-			store.dispatch(addCard({
-				id: `${selectionContent}-${cnt++}`,
+			noteUIStore.dispatch(addCard({
 				title: '',
 				content: selectionContent,
 				isOCR: false,
 				image: '',
 				selections: [],
-				children: [],
 				position: {
 					x: DEFAULT_NOTE_WIDTH / 2,
 					y: DEFAULT_NOTE_HEIGHT / 2,
 				},
-				type: CardType.MIND_MAP,
+				noteId: noteDataStore.getState().note.notes[0]?.id || '',
 			}));
 		}
 	};

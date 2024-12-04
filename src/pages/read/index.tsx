@@ -4,7 +4,7 @@ import { ReadPageHeader } from './header';
 import { getDocument, GlobalWorkerOptions } from 'pdfjs-dist';
 import Reader from '../../components/reader';
 import { Note } from '../../components/note';
-import { NoteItem } from '../../store/data/types';
+import { NoteData } from '../../store/data/types';
 import { store } from '../../store/data/note';
 
 GlobalWorkerOptions.workerSrc = new URL(
@@ -15,7 +15,7 @@ GlobalWorkerOptions.workerSrc = new URL(
 const { Content } = Layout;
 
 export const ReadPage: React.FC = () => {
-	const [currentNote, setCurrentNote] = useState<NoteItem | undefined>();
+	const [currentNote, setCurrentNote] = useState<NoteData | undefined>();
 	useEffect(() => {
 		const notes = store.getState().note.notes;
 		const currentId = store.getState().note.currentNote;

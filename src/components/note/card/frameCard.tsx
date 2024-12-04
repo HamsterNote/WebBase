@@ -1,8 +1,8 @@
 import React from 'react';
-import { CardItem } from '../../../store/data/types';
+import { CardData } from '../../../store/data/types';
 
 interface Props {
-	card: CardItem;
+	card: CardData;
 }
 
 export const FrameCard: React.FC<Props> = (props: Props) => {
