@@ -4,8 +4,7 @@ import { ReadPageHeader } from './header';
 import { getDocument, GlobalWorkerOptions } from 'pdfjs-dist';
 import Reader from '../../components/reader';
 import { Note } from '../../components/note';
-import { NoteData } from '../../store/data/types';
-import { store } from '../../store/data/note';
+import { NoteItem, noteDataStore, transformNoteData } from '../../store/data/note';
 
 GlobalWorkerOptions.workerSrc = new URL(
 	'pdfjs-dist/build/pdf.worker.min.mjs',
@@ -15,19 +14,19 @@ GlobalWorkerOptions.workerSrc = new URL(
 const { Content } = Layout;
 
 export const ReadPage: React.FC = () => {
-	const [currentNote, setCurrentNote] = useState<NoteData | undefined>();
+	const [currentNote, setCurrentNote] = useState<NoteItem | undefined>();
 	useEffect(() => {
-		const notes = store.getState().note.notes;
-		const currentId = store.getState().note.currentNote;
+		const notes = transformNoteData(noteDataStore.getState().note.notesData, noteDataStore.getState().note.cardsData);
+		const currentId = noteDataStore.getState().note.currentNote;
 		setCurrentNote(notes.find(note => note.id === currentId));
-		const unsubscribe = store.subscribe(() => {
-			const _notes = store.getState().note.notes;
+		const unsubscribe = noteDataStore.subscribe(() => {
+			const _notes = transformNoteData(noteDataStore.getState().note.notesData, noteDataStore.getState().note.cardsData);
 			setCurrentNote(_notes.find(note => note.id === currentId));
 		});
 		return () => unsubscribe();
 	}, []);
 	const {
-		token: { colorBgContainer, borderRadiusLG },
+		token: { borderRadiusLG },
 	} = theme.useToken();
 	const fileToArrayBuffer = (file: File): Promise<string | ArrayBuffer | undefined | null> => {
 		return new Promise((resolve) => {
@@ -171,7 +170,7 @@ export const ReadPage: React.FC = () => {
 					}
 				]
 			}} />
-			{currentNote && <Note note={currentNote}/>}
+			{currentNote && <Note note={currentNote} />}
 			<input type="file" onChange={onUpload} style={{ display: 'none' }}/>
 		</Content>
 	</Layout>;

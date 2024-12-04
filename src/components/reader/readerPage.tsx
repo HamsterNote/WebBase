@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './index.scss';
 import ReaderText from './readerText';
 import { Page } from './types';

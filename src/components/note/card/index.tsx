@@ -26,12 +26,13 @@ export const NoteCard: React.FC<Props> = (props: Props) => {
 			x: evt.pageX,
 			y: evt.pageY,
 		};
+		let result = { ...startPosition };
 		const onMouseMove = (evt: MouseEvent) => {
 			const diffPosition: Number2 = {
 				x: evt.pageX - startDragPosition.x,
 				y: evt.pageY - startDragPosition.y,
 			}
-			const result: Number2 = {
+			result = {
 				x: startPosition.x + diffPosition.x,
 				y: startPosition.y + diffPosition.y,
 			}
@@ -40,12 +41,12 @@ export const NoteCard: React.FC<Props> = (props: Props) => {
 		const onMouseUp = (evt: MouseEvent) => {
 			document.removeEventListener('mousemove', onMouseMove);
 			document.removeEventListener('mouseup', onMouseUp);
-			setIsDragging(false);
-			setDraggingPosition(undefined);
 			noteDataStore.dispatch(setCardPosition({
 				id: props.card.id,
-				position: draggingPosition || startPosition,
+				position: result,
 			}));
+			setIsDragging(false);
+			setDraggingPosition(undefined);
 		}
 		document.addEventListener('mousemove', onMouseMove);
 		document.addEventListener('mouseup', onMouseUp);
