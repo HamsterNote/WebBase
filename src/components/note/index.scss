@@ -1,9 +1,13 @@
 .hamster-note-note {
-  overflow: auto;
+  overflow: hidden;
   width: 50%;
   height: 100%;
   .hamster-note-note-container {
     position: relative;
+    width: 0;
+    height: 0;
+    margin-top: 50%;
+    margin-left: 50%;
   }
   .hamster-note-card-container {
     position: absolute;

@@ -3,7 +3,6 @@ import './index.scss';
 import { Document } from './types';
 import ReaderPage from './readerPage';
 import { addCard, noteDataStore, addNote, setCurrentNote } from '../../store/data/note';
-import { DEFAULT_NOTE_HEIGHT, DEFAULT_NOTE_WIDTH } from '../consts/noteConsts';
 
 interface Props {
 	document: Document;
@@ -30,8 +29,8 @@ const Reader: React.FC<Props> = (props: Props) => {
 				image: '',
 				selections: [],
 				position: {
-					x: DEFAULT_NOTE_WIDTH / 2,
-					y: DEFAULT_NOTE_HEIGHT / 2,
+					x: 0,
+					y: 0,
 				},
 				noteId: noteDataStore.getState().note.notesData[0]?.id || '',
 			}));

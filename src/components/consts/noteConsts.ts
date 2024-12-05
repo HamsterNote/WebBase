@@ -1,2 +1,0 @@
-export const DEFAULT_NOTE_WIDTH = 10000;
-export const DEFAULT_NOTE_HEIGHT = 10000;
