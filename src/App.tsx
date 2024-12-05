@@ -1,46 +1,36 @@
 import React, { useState } from 'react';
-import {
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-} from '@ant-design/icons';
 import './reset.css';
-import { Layout, Menu } from 'antd';
-import { ReadPage } from './pages/read';
+import { ConfigProvider, Layout } from 'antd';
+// import { ReadPage } from './pages/read';
+import { Shelf } from './pages/shelf';
+import { SideMenu } from './components/layout/sider';
+import { ThemeProvider, ThemeMode } from 'antd-style';
 
-const { Sider } = Layout;
+const { Content, Footer } = Layout;
 
 const App: React.FC = () => {
-  const [collapsed] = useState(false);
-
+  const [themeMode, setThemeMode] = useState<ThemeMode>('auto');
   return (
-    <Layout hasSider={true} className="app">
-      <Sider trigger={null} collapsible collapsed={collapsed}>
-        <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={['1']}
-          items={[
-            {
-              key: '1',
-              icon: <UserOutlined />,
-              label: 'nav 1',
-            },
-            {
-              key: '2',
-              icon: <VideoCameraOutlined />,
-              label: 'nav 2',
-            },
-            {
-              key: '3',
-              icon: <UploadOutlined />,
-              label: 'nav 3',
-            },
-          ]}
-        />
-      </Sider>
-      <ReadPage />
-    </Layout>
+    <ThemeProvider themeMode="auto" onThemeModeChange={setThemeMode}>
+      <ConfigProvider theme={{
+        components: {
+          Menu: {
+          }
+        }
+      }}>
+        <Layout className="app">
+          <Layout hasSider={true}>
+            <SideMenu themeMode={themeMode} />
+            {/*<ReadPage />*/}
+            <Content>
+              <Shelf />
+            </Content>
+            <SideMenu themeMode={themeMode} />
+          </Layout>
+          <Footer>Footer</Footer>
+        </Layout>
+      </ConfigProvider>
+    </ThemeProvider>
   );
 };
 
