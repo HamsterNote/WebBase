@@ -15,7 +15,7 @@ interface Props extends AntdSiderProps {
 
 export const SideMenu: React.FC<Props> = (props: Props) => {
 	// 感觉是antd有bug，这里要填light，不然会有一些dark的样式
-	return <Sider theme="light" trigger={null} collapsible collapsed={true} className="hamster-note-side-menu">
+	return <Sider theme="light" trigger={null} collapsible collapsed={true} collapsedWidth={50} className="hamster-note-side-menu">
 		<Menu
 			mode="inline"
 			defaultSelectedKeys={['1']}

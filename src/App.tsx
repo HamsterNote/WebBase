@@ -5,6 +5,7 @@ import { ConfigProvider, Layout } from 'antd';
 import { Shelf } from './pages/shelf';
 import { SideMenu } from './components/layout/sider';
 import { ThemeProvider, ThemeMode } from 'antd-style';
+import { StatusBar } from './components/layout/statusBar';
 
 const { Content, Footer } = Layout;
 
@@ -27,7 +28,7 @@ const App: React.FC = () => {
             </Content>
             <SideMenu themeMode={themeMode} />
           </Layout>
-          <Footer>Footer</Footer>
+          <StatusBar />
         </Layout>
       </ConfigProvider>
     </ThemeProvider>
