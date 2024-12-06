@@ -1,5 +1,5 @@
 import React from 'react';
-import { GetProps, Menu } from 'antd';
+import { Avatar, Button, Flex, GetProps, Menu } from 'antd';
 import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
 import { Layout } from 'antd';
 import './index.scss';
@@ -16,6 +16,12 @@ interface Props extends AntdSiderProps {
 export const SideMenu: React.FC<Props> = (props: Props) => {
 	// 感觉是antd有bug，这里要填light，不然会有一些dark的样式
 	return <Sider theme="light" trigger={null} collapsible collapsed={true} collapsedWidth={50} className="hamster-note-side-menu">
+		<Avatar shape="square" icon={<UserOutlined />} />
+		<Flex vertical gap="small" style={{ width: '100%' }}>
+			<Button type="text" block style={{ margin: '0 4px' }}>
+				<UserOutlined />
+			</Button>
+		</Flex>
 		<Menu
 			mode="inline"
 			defaultSelectedKeys={['1']}

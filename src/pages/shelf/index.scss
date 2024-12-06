@@ -1,0 +1,21 @@
+.hamster-note-shelf {
+  padding: 50px;
+  overflow: auto;
+  height: 100%;
+  .hamster-note-shelf-item {
+    display: flex;
+    justify-content: center;
+    &-container {
+      width: 150px;
+    }
+    &-cover {
+      margin: -12px -12px 0 -12px;
+      border-radius: 7px 7px 0 0;
+      width: 148px;
+      height: 180px;
+    }
+    &-title {
+      margin-bottom: 0;
+    }
+  }
+}
