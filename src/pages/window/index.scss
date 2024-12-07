@@ -1,0 +1,103 @@
+.hamster-note-window-item {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  .ant-splitter-panel {
+    height: 100%;
+  }
+  &:after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    content: '';
+    background-color: #ccc;
+    opacity: 0.5;
+    display: none;
+    pointer-events: none;
+  }
+  &.left {
+    &:after {
+      right: 50%;
+      display: block;
+    }
+  }
+  &.right {
+    &:after {
+      left: 50%;
+      display: block;
+    }
+  }
+  &.top {
+    &:after {
+      bottom: 50%;
+      display: block;
+    }
+  }
+  &.bottom {
+    &:after {
+      top: 50%;
+      display: block;
+    }
+  }
+  &.none {
+    &:after {
+      display: block;
+    }
+  }
+}
+
+.hamster-note-window-item {
+  width: 100%;
+  height: 100%;
+}
+
+.hamster-note-window-item-tab {
+  width: 100%;
+  height: 100%;
+  .hamster-note-window-item-tab-bar {
+    user-select: none;
+  }
+  .ant-tabs-nav {
+    margin-bottom: 0;
+  }
+  .ant-tabs-content {
+    height: 100%;
+     & > div {
+       height: 100%;
+     }
+  }
+}
+
+.hamster-note-window-item-tab-bar-content {
+  position: relative;
+  .hamster-note-window-item-tab-bar-content-before, .hamster-note-window-item-tab-bar-content-after {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 40px;
+    z-index: 2;
+    &:after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translate(-50%, 0);
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background-color: #1677ff;
+      z-index: 2;
+      display: none;
+    }
+    &.active:after {
+      display: block;
+    }
+  }
+  .hamster-note-window-item-tab-bar-content-before {
+    left: -20px;
+  }
+  .hamster-note-window-item-tab-bar-content-after {
+    right: -20px;
+  }
+}

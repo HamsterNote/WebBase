@@ -1,18 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './reset.css';
 import { ConfigProvider, Layout } from 'antd';
 // import { ReadPage } from './pages/read';
 import { Shelf } from './pages/shelf';
 import { SideMenu } from './components/layout/sider';
-import { ThemeProvider, ThemeMode } from 'antd-style';
+import { ThemeProvider } from 'antd-style';
 import { StatusBar } from './components/layout/statusBar';
+import { SideBarPosition } from './store/data/sideBar';
+import { WindowContainer, windowControlStore } from './store/data/windowControl';
+import { Container } from './pages/window/container';
+import { MovingTabIcon } from './components/movingTabIcon';
 
-const { Content, Footer } = Layout;
+const { Content } = Layout;
 
 const App: React.FC = () => {
-  const [themeMode, setThemeMode] = useState<ThemeMode>('auto');
+  const [container, setContainer] = useState<WindowContainer | undefined>();
+  useEffect(() => {
+    setContainer(windowControlStore.getState().windowControl.container);
+    const unsubscribe = windowControlStore.subscribe(() => {
+      setContainer(windowControlStore.getState().windowControl.container);
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, []);
   return (
-    <ThemeProvider themeMode="auto" onThemeModeChange={setThemeMode}>
+    <ThemeProvider themeMode="auto">
       <ConfigProvider theme={{
         components: {
           Menu: {
@@ -21,16 +34,17 @@ const App: React.FC = () => {
       }}>
         <Layout className="app">
           <Layout hasSider={true}>
-            <SideMenu themeMode={themeMode} />
+            <SideMenu position={SideBarPosition.LEFT} />
             {/*<ReadPage />*/}
             <Content>
-              <Shelf />
+              {container ? <Container container={container} /> : null}
             </Content>
-            <SideMenu themeMode={themeMode} />
+            <SideMenu position={SideBarPosition.RIGHT} />
           </Layout>
           <StatusBar />
         </Layout>
       </ConfigProvider>
+      <MovingTabIcon />
     </ThemeProvider>
   );
 };
