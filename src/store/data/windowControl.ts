@@ -118,8 +118,8 @@ export function findPage(container: WindowContainer, pageId: string): WindowPage
 	return allPages.find(page => page.id === pageId);
 }
 
-const closeContainerUtil = (container: WindowContainer, { containerId }: { containerId: string; }) => {
-	const allContainers = getAllContainers(container);
+const closeContainerUtil = (rootContainer: WindowContainer, { containerId }: { containerId: string; }) => {
+	const allContainers = getAllContainers(rootContainer);
 	const close = (id: string) => {
 		const parentContainer = allContainers.find(container => container.items.find(item => item.id === id));
 		if (parentContainer) {
@@ -132,31 +132,52 @@ const closeContainerUtil = (container: WindowContainer, { containerId }: { conta
 	close(containerId);
 }
 
-const closeWindowItemUtil = (container: WindowContainer, { containerId, windowId }: { containerId?: string; windowId: string; }) => {
-	const parentContainer = containerId ? findContainer(container, containerId) : getAllContainers(container).find(c => c.items.find(item => item.id === windowId));
+const closeWindowItemUtil = (rootContainer: WindowContainer, { containerId, windowId }: { containerId?: string; windowId: string; }) => {
+	const parentContainer = containerId ? findContainer(rootContainer, containerId) : getAllContainers(rootContainer).find(c => c.items.find(item => item.id === windowId));
 	if (parentContainer) {
 		parentContainer.items = parentContainer.items.filter(item => item.id !== windowId);
 		if (parentContainer.items.length === 0) {
-			closeContainerUtil(container, { containerId: parentContainer.id });
+			closeContainerUtil(rootContainer, { containerId: parentContainer.id });
 		}
 	}
 }
 
-const closePageUtil = (container: WindowContainer, { containerId, windowId, pageId }: { containerId?: string; windowId?: string; pageId: string; }) => {
-	const windowItem = windowId ? findWindowItem(container, windowId) : getAllWindowItems(container).find(wItem => wItem.pages.find(p => p.id === pageId));
-	if (windowItem) {
-		// const onlyPage = container.items.length === 1 && windowItem.pages.length === 1;
-		windowItem.pages = windowItem.pages.filter(item => item.id !== pageId);
-		if (windowItem.pages.length === 0) {
-			closeWindowItemUtil(container, { containerId: containerId, windowId: windowItem.id });
+export const getIsOnlyPage = (rootContainer: WindowContainer) => {
+	const tempList: Array<WindowContainer | WindowItem> = [rootContainer];
+	while(tempList.length) {
+		const item = tempList.shift();
+		if (item) {
+			if (isWindowItem(item)) {
+				if (item.pages.length > 1) {
+					return false;
+				}
+			} else {
+				if (item.items.length > 1) {
+					return false;
+				} else {
+					tempList.push(...item.items);
+				}
+			}
 		}
-		// if (onlyPage) {
-		// 	windowItem.pages.push({
-		// 		id: getId(),
-		// 		title: SHELF_TITLE + `-${cnt++}`,
-		// 		type: PageType.SHELF,
-		// 	});
-		// }
+	}
+	return true;
+};
+
+const closePageUtil = (rootContainer: WindowContainer, { containerId, windowId, pageId }: { containerId?: string; windowId?: string; pageId: string; }) => {
+	const windowItem = windowId ? findWindowItem(rootContainer, windowId) : getAllWindowItems(rootContainer).find(wItem => wItem.pages.find(p => p.id === pageId));
+	if (windowItem) {
+		const onlyPage = getIsOnlyPage(rootContainer);
+		windowItem.pages = windowItem.pages.filter(item => item.id !== pageId);
+		if (windowItem.pages.length === 0 && !onlyPage) {
+			closeWindowItemUtil(rootContainer, { containerId: containerId, windowId: windowItem.id });
+		}
+		if (onlyPage) {
+			windowItem.pages.push({
+				id: getId(),
+				title: SHELF_TITLE + `-${cnt++}`,
+				type: PageType.SHELF,
+			});
+		}
 	}
 }
 

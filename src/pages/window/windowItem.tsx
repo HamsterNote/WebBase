@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { addPage, closePage, insertPage, isWindowItem, movePage, NewSplitWindowPosition, PageType, setCurrentDraggingPageId, split as splitContainer, WindowContainer, windowControlStore, WindowItem, WindowSplitType } from '../../store/data/windowControl';
+import { addPage, closePage, getIsOnlyPage, insertPage, isWindowItem, movePage, NewSplitWindowPosition, PageType, setCurrentDraggingPageId, split as splitContainer, WindowContainer, windowControlStore, WindowItem, WindowSplitType } from '../../store/data/windowControl';
 import './index.scss';
 import { Flex, Tabs } from 'antd';
 import { Shelf } from '../shelf';
@@ -95,14 +95,22 @@ export const WindowItemComponent: React.FC<Props> = (props) => {
 	};
 	const onTabMouseDown = (pageId: string | null) => (mouseDownEvent: React.MouseEvent) => {
 		if (pageId) {
+			let isOutOfTab = false;
+			const rect = mouseDownEvent.currentTarget.getBoundingClientRect();
 			const onMove = (moveEvent: MouseEvent) => {
-				setCurrentMoveTab(pageId);
-				windowControlStore.dispatch(setCurrentDraggingPageId({
-					pageId: pageId,
-					windowId: windowItem.id,
-					containerId: container.id,
-					mousePosition: { x: moveEvent.pageX, y: moveEvent.pageY },
-				}));
+				const mousePosition = { x: moveEvent.pageX, y: moveEvent.pageY };
+				// 当鼠标移出Tab的时候才触发，避免误触
+				if (isOutOfTab) {
+					setCurrentMoveTab(pageId);
+					windowControlStore.dispatch(setCurrentDraggingPageId({
+						pageId: pageId,
+						windowId: windowItem.id,
+						containerId: container.id,
+						mousePosition,
+					}));
+				} else {
+					isOutOfTab = !(rect.left <= mousePosition.x && mousePosition.x <= rect.right && rect.top <= mousePosition.y && mousePosition.y <= rect.bottom);
+				}
 			}
 			const onMouseUp = (e: MouseEvent) => {
 				document.removeEventListener('mousemove', onMove);
@@ -160,7 +168,7 @@ export const WindowItemComponent: React.FC<Props> = (props) => {
 		}
 	};
 	const rootContainer = windowControlStore.getState().windowControl.container;
-	const isOnlyPage = rootContainer.items.length === 1 && (rootContainer.items[0] as WindowItem)?.pages?.length === 1;
+	const isOnlyPage = getIsOnlyPage(rootContainer);
 	return <Flex ref={ref} className={`hamster-note-window-item ${movingInsidePosition || ''}`} onMouseMove={currentDraggingPageId ? onMouseMove : undefined} onMouseOut={currentDraggingPageId ? onMouseOut : undefined} onMouseUp={onMouseUp} justify="center" align="center" style={{ height: '100%' }}>
 		<Tabs
 			className="hamster-note-window-item-tab"
