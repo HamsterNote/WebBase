@@ -28,6 +28,6 @@ export const TaskBar: React.FC<Props> = (props) => {
 	return <Flex className="hamster-note-task-bar" vertical={false} style={{ width: props.width }}>
 		<p className="hamster-note-task-bar-label">{props.task.label}: </p>
 		<Progress percent={+(props.task.progress * 100).toFixed(2)} size="small" />
-		{<Button onClick={onAbortTask} disabled={aborting} color="danger" variant="text" size="small" icon={aborting ? <LoadingOutlined /> : <CloseOutlined />} style={{ marginTop: -2, marginLeft: 4 }} />}
+		{(props.task.abort || props.task.progress >= 1) && <Button onClick={onAbortTask} disabled={aborting} color="danger" variant="text" size="small" icon={aborting ? <LoadingOutlined /> : <CloseOutlined />} style={{ marginTop: -2, marginLeft: 4 }} />}
 	</Flex>;
 };
