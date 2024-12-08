@@ -1,7 +1,10 @@
 .hamster-note-shelf {
+  height: 100%;
+}
+
+.hamster-note-shelf-content {
   padding: 50px;
   overflow: auto;
-  height: 100%;
   .hamster-note-shelf-item {
     display: flex;
     justify-content: center;

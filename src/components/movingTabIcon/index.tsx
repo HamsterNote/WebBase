@@ -13,5 +13,8 @@ export const MovingTabIcon: React.FC = () => {
 			unsubscribe();
 		}
 	}, []);
-	return <div className="hamster-note-moving-tab-icon" style={position ? { top: `${position?.y}px`, left: `${position?.x}px` } : undefined}/>;
+	if (!position) {
+		return null;
+	}
+	return <div className="hamster-note-moving-tab-icon" style={{ top: `${position?.y}px`, left: `${position?.x}px` }}/>;
 }

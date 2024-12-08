@@ -3518,6 +3518,13 @@ braces@^3.0.3, braces@~3.0.2:
   dependencies:
     fill-range "^7.1.1"
 
+browser-md5-file@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.npmjs.org/browser-md5-file/-/browser-md5-file-1.1.1.tgz#247d63527f662d9667adecbe61808b4961b90dc6"
+  integrity sha512-9h2UViTtZPhBa7oHvp5mb7MvJaX5OKEPUsplDwJ800OIV+In7BOR3RXOMB78obn2iQVIiS3WkVLhG7Zu1EMwbw==
+  dependencies:
+    spark-md5 "^2.0.2"
+
 browser-process-hrtime@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/browser-process-hrtime/-/browser-process-hrtime-1.0.0.tgz#3c9b4b7d782c8121e56f10106d84c0d0ffc94626"
@@ -5891,6 +5898,11 @@ indent-string@^4.0.0:
   version "4.0.0"
   resolved "https://registry.npmjs.org/indent-string/-/indent-string-4.0.0.tgz#624f8f4497d619b2d9768531d58f4122854d7251"
   integrity sha512-EdDDZu4A2OyIK7Lr/2zG+w5jmbuk1DVBnEwREQvBzspBJkCEbRa8GxU1lghYcaGJCnRWibjDXlq779X1/y5xwg==
+
+indexeddb-toolkit@^0.0.4:
+  version "0.0.4"
+  resolved "https://r.cnpmjs.org/indexeddb-toolkit/-/indexeddb-toolkit-0.0.4.tgz#78c1f46985f9e0d208de3e58ed04f6f2fc0372eb"
+  integrity sha512-SVGKKfAOf2pN42rr4BvPWBphDxetJJTSpHS5eN3ZMOfuTV3NG9xQA45QnqHTwesOFuTX77D+0Nrc+5AxGMxKyQ==
 
 inflight@^1.0.4:
   version "1.0.6"
@@ -9706,6 +9718,11 @@ sourcemap-codec@^1.4.8:
   version "1.4.8"
   resolved "https://registry.npmjs.org/sourcemap-codec/-/sourcemap-codec-1.4.8.tgz#ea804bd94857402e6992d05a38ef1ae35a9ab4c4"
   integrity sha512-9NykojV5Uih4lgo5So5dtw+f0JgJX30KCNI8gwhz2J9A15wD0Ml6tjHKwf6fTSa6fAdVBdZeNOs9eJ71qCk8vA==
+
+spark-md5@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.npmjs.org/spark-md5/-/spark-md5-2.0.2.tgz#37b763847763ae7e7acef2ca5233d01e649a78b7"
+  integrity sha512-9WfT+FYBEvlrOOBEs484/zmbtSX4BlGjzXih1qIEWA1yhHbcqgcMHkiwXoWk2Sq1aJjLpcs6ZKV7JxrDNjIlNg==
 
 spdy-transport@^3.0.0:
   version "3.0.0"
