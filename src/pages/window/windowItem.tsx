@@ -52,7 +52,7 @@ export const WindowItemComponent: React.FC<Props> = (props) => {
 				}
 			} else if (windowItem.pages.length > 1 || fromWindowId !== windowItem.id) {
 				windowControlStore.dispatch(splitContainer({
-					containerId: container.id,
+					windowId: windowItem.id,
 					split: movingInsidePosition === NewSplitWindowPosition.LEFT || movingInsidePosition === NewSplitWindowPosition.RIGHT ? WindowSplitType.HORIZONTAL : WindowSplitType.VERTICAL,
 					newPosition: movingInsidePosition,
 					source: {

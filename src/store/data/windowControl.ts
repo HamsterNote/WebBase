@@ -185,38 +185,32 @@ const windowControl = createSlice({
 		closeContainer: (state, { payload }: { payload: { containerId: string; } }) => {
 			closeContainerUtil(state.container, payload)
 		},
-		split: (state, { payload }: { payload: { containerId: string; split: WindowSplitType; newPosition: NewSplitWindowPosition; source?: { containerId: string; windowId: string; pageId: string; } } }) => {
-			const container = findContainer(state.container, payload.containerId);
-			if (container) {
-				container.split = payload.split;
-				// 只有单个WindowItem和多个Container的情况
-				if (container.items.length === 1) {
-					const { containerId, windowId, pageId } = payload.source || {};
-					const newPage = pageId ? findPage(state.container, pageId) : { id: getId(), title: SHELF_TITLE + `-${cnt++}` , type: PageType.SHELF };
-					if (newPage) {
-						if (pageId && windowId && containerId) {
-							closePageUtil(state.container, { pageId });
-						}
-						const windowItem = container.items[0];
-						if (isWindowItem(windowItem)) {
-							// 只有一个且是WindowItem
-							container.items = [{
-								id: getId(),
-								split: WindowSplitType.NONE,
-								items: [windowItem],
-							}];
-						}
-						const newContainerItem: WindowContainer = {
-							id: getId(),
-							items: [{
-								id: getId(),
-								pages: [newPage],
-							}],
-							split: WindowSplitType.NONE,
-						};
-						const isInsertFront = payload.newPosition === NewSplitWindowPosition.LEFT || payload.newPosition === NewSplitWindowPosition.TOP;
-						container.items = isInsertFront ? [newContainerItem, ...container.items] : [...container.items, newContainerItem];
+		split: (state, { payload }: { payload: { windowId: string; split: WindowSplitType; newPosition: NewSplitWindowPosition; source?: { containerId: string; windowId: string; pageId: string; } } }) => {
+			const parentContainer = getAllContainers(state.container).find(container => container.items.find(item => item.id === payload.windowId));
+			if (parentContainer) {
+				const oldWindowItem: WindowItem = parentContainer.items.find(item => item.id === payload.windowId) as WindowItem;
+				const newContainer: WindowContainer = {
+					id: getId(),
+					items: [],
+					split: payload.split,
+				};
+				const { containerId, windowId, pageId } = payload.source || {};
+				const newPage = pageId ? findPage(state.container, pageId) : { id: getId(), title: SHELF_TITLE + `-${cnt++}` , type: PageType.SHELF };
+				if (newPage) {
+					if (pageId && windowId && containerId) {
+						closePageUtil(state.container, { pageId });
 					}
+					const newWindowItem: WindowItem = {
+						id: getId(),
+						pages: [newPage],
+					};
+					const isInsertFront = payload.newPosition === NewSplitWindowPosition.LEFT || payload.newPosition === NewSplitWindowPosition.TOP;
+					if (isInsertFront) {
+						newContainer.items.push(newWindowItem, oldWindowItem);
+					} else {
+						newContainer.items.push(oldWindowItem, newWindowItem);
+					}
+					parentContainer.items.splice(parentContainer.items.indexOf(oldWindowItem), 1, newContainer);
 				}
 			}
 		},

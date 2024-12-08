@@ -19,13 +19,27 @@ export const Container: React.FC<Props> = (props: Props) => {
 	const { container } = props;
 	const { items, split } = container;
 
-	return <Splitter layout={splitMap[split]}>
+	return <Splitter layout={splitMap[split]} className="hamster-note-window-splitter">
 		{
 			items.map(item => {
-				return <Splitter.Panel key={item.id} defaultSize="50%" min="20%" max="70%" collapsible>
-					{ isWindowItem(item) ? <WindowItemComponent container={container} windowItem={item} /> : <Container container={item} /> }
+				return <Splitter.Panel key={item.id} collapsible>
+					<ContainerContent container={container} item={item} key={`${item.id}-content`} />
 				</Splitter.Panel>;
 			})
 		}
 	</Splitter>;
 };
+
+interface ContentProps {
+	container: WindowContainer;
+	item: WindowContainer['items'][number];
+}
+
+const ContainerContent: React.FC<ContentProps> = (props) => {
+	const { container, item } = props;
+	if (isWindowItem(item)) {
+		return <WindowItemComponent container={container} windowItem={item} />;
+	} else {
+		return <Container container={item} />;
+	}
+}
