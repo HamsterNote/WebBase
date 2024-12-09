@@ -8,6 +8,7 @@ import { filesStore, FileType, HamsterDirectoryFile, HamsterFileBase, isDirector
 import moment from 'moment';
 import { RcFile, UploadChangeParam } from 'antd/es/upload';
 import { uploadFiles } from '../../api/file';
+import { Uploader } from '../../components/uploader';
 
 const { Header, Content } = Layout;
 
@@ -68,9 +69,9 @@ export const Shelf: React.FC<Props> = (props) => {
 				}
 			</Row> : <Flex vertical justify="center" align="center" style={{ height: '100%' }}>
 				<Empty description={'空空如也，上传一个文件开始学习吧'} style={{ width: '400px' }}>
-					<Upload name="file" customRequest={onUpload} accept={'pdf'} showUploadList={false}>
+					<Uploader>
 						<Button icon={<UploadOutlined />}>点这里上传</Button>
-					</Upload>
+					</Uploader>
 				</Empty>
 			</Flex>}
 		</Content>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Modal } from 'antd';
 import { Task, tasksStore } from '../../store/tasks';
 import { TaskBar } from './taskBar';
+import { DownOutlined } from '@ant-design/icons';
 
 interface Props {
 	task: string | undefined;
@@ -9,7 +10,7 @@ interface Props {
 }
 
 export const TaskDetail: React.FC<Props> = (props) => {
-	return <Modal title="任务列表" open={!!props.task} onCancel={props.onCancel} centered footer={null}>
+	return <Modal title="任务列表" open={!!props.task} onCancel={props.onCancel} centered footer={null} closeIcon={<DownOutlined />}>
 		<TaskDetailContent {...props} />
 	</Modal>;
 };

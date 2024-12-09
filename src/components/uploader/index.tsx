@@ -1,9 +1,12 @@
-import React from 'react';
-import { Button, Upload } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
+import React, { ReactElement } from 'react';
+import { Upload } from 'antd';
 
-export const Uploader: React.FC = () => {
+interface Props {
+	children: ReactElement
+}
+
+export const Uploader: React.FC<Props> = (props) => {
 	return <Upload name="file" accept={'pdf'} showUploadList={false}>
-		<Button icon={<UploadOutlined />}>点这里上传</Button>
+		{props.children}
 	</Upload>
 };
