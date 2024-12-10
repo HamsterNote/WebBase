@@ -5,6 +5,7 @@ export enum FileType {
 	NOTE = 'note',
 	DOCUMENT = 'doc',
 	DIRECTORY = 'dir',
+	NOTE_DIRECTORY = 'noteDir',
 }
 
 export interface HamsterFileBase {
@@ -16,6 +17,7 @@ export interface HamsterFileBase {
 	createTime: number;
 	modifyTime: number;
 	hasNewVersion: boolean;
+	taskId?: string;
 }
 
 export function isNoteFile(file: HamsterFileBase): file is HamsterNoteFile {
@@ -23,10 +25,11 @@ export function isNoteFile(file: HamsterFileBase): file is HamsterNoteFile {
 }
 
 export interface HamsterNoteFile extends HamsterFileBase {
+	// 我们允许NoteFile同时在NoteList和DocumentList两边文件夹关联
 	cover: string;
 	type: FileType.NOTE;
-	noteId: string;
-	relatedDirectoryId?: string;
+	// 上传或下载进度
+	progress: number;
 }
 
 export function isDocumentFile(file: HamsterFileBase): file is HamsterDocumentFile {
@@ -36,6 +39,8 @@ export function isDocumentFile(file: HamsterFileBase): file is HamsterDocumentFi
 export interface HamsterDocumentFile extends HamsterFileBase {
 	type: FileType.DOCUMENT;
 	documentId: string;
+	// 上传或下载进度
+	progress: number;
 }
 
 export function isDirectoryFile(file: HamsterFileBase): file is HamsterDirectoryFile {
@@ -44,6 +49,15 @@ export function isDirectoryFile(file: HamsterFileBase): file is HamsterDirectory
 
 export interface HamsterDirectoryFile extends HamsterFileBase {
 	type: FileType.DIRECTORY;
+	childrenIds: string[];
+}
+
+export function isNoteDirectoryFile(file: HamsterFileBase): file is HamsterDirectoryFile {
+	return file.type === FileType.NOTE_DIRECTORY;
+}
+
+export interface HamsterNoteDirectoryFile extends HamsterFileBase {
+	type: FileType.NOTE_DIRECTORY;
 	childrenIds: string[];
 }
 
@@ -56,11 +70,26 @@ const files = createSlice({
 	name: 'files',
 	initialState: filesInitialState(),
 	reducers: {
-
+		startUploadDocument: (state, { payload }: { payload: { file: HamsterDocumentFile, directoryId: string; } }) => {
+			state.files.push(payload.file);
+			const dir = state.files.find(file => file.id === payload.directoryId && isDirectoryFile(file)) as HamsterDirectoryFile;
+			if (dir) {
+				dir.childrenIds.push(payload.file.id);
+			}
+		},
+		updateUploadProgress: (state, { payload }: { payload: { id: string, progress: number; } }) => {
+			const file = state.files.find(file => file.id === payload.id && isDocumentFile(file)) as HamsterDocumentFile;
+			if (file) {
+				file.progress = payload.progress;
+				if (file.progress >= 1) {
+					file.taskId = undefined;
+				}
+			}
+		}
 	},
 });
 
-export const {  } = files.actions;
+export const { startUploadDocument, updateUploadProgress } = files.actions;
 
 export const filesStore = configureStore({
 	reducer: {

@@ -60,8 +60,8 @@ export const Shelf: React.FC<Props> = (props) => {
 										ellipsis={{
 											rows: 2
 										}}
-										title={`钢铁是怎样炼成的钢铁是怎样炼成的钢铁是怎样炼成的`}
-									>钢铁是怎样炼成的钢铁是怎样炼成的钢铁是怎样炼成的</Paragraph>
+										title={file.name}
+									>{file.name}</Paragraph>
 								</Card>
 							</Badge.Ribbon>
 						</div>

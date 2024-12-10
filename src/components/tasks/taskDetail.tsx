@@ -29,5 +29,5 @@ export const TaskDetailContent: React.FC<Props> = (props) => {
 	if (!task) {
 		return null;
 	}
-	return task.detail || <TaskBar task={task} width="100%" />;
+	return task.detail || <TaskBar onlyShowParent={false} task={task} width="100%" />;
 };

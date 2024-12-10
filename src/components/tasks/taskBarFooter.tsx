@@ -9,9 +9,9 @@ export const TaskBarFooter: React.FC = () => {
 	const [tasks, setTasks] = useState<Task[]>([]);
 	const [showDetail, setShowDetail] = useState<string | undefined>(undefined);
 	useEffect(() => {
-		setTasks(tasksStore.getState().tasks.tasks.filter(task => !task.hidden));
+		setTasks(tasksStore.getState().tasks.tasks);
 		const unsubscribe = tasksStore.subscribe(() => {
-			setTasks(tasksStore.getState().tasks.tasks.filter(task => !task.hidden));
+			setTasks(tasksStore.getState().tasks.tasks);
 		});
 		return unsubscribe;
 	}, []);
@@ -33,10 +33,10 @@ export const TaskBarFooter: React.FC = () => {
 	const notCompleteTasks = tasks.filter(task => task.progress < 1);
 	return <>
 		<Dropdown placement="top" menu={{ items: tasks.map((task) => {
-				return { label: <TaskBar task={task} />, key: task.id };
+				return { label: <TaskBar onlyShowParent={false} task={task} />, key: task.id };
 			}), onClick: onTaskItemClick }} trigger={['click']}>
 			<Button size="small" type="text">
-				<TaskBar task={lastTask} />
+				<TaskBar task={lastTask} onlyShowParent />
 				{!!notCompleteTasks.length && <span style={{ fontSize: 12, marginTop: -4 }}>({notCompleteTasks.length})</span>}
 			</Button>
 		</Dropdown>
