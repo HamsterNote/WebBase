@@ -134,6 +134,8 @@ const tasks = createSlice({
 				const nextTask = parentTask.children.find(c => c.progress < 1);
 				if (nextTask) {
 					runMap[nextTask.id]?.();
+				} else {
+					state.tasks = state.tasks.filter(t => t.id !== parentTask.id);
 				}
 			} else {
 				state.tasks = state.tasks.filter(task => task.id !== payload);
