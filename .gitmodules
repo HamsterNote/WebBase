@@ -1,0 +1,6 @@
+[submodule "src/tools/document/DocumentKit"]
+	path = src/tools/document/DocumentKit
+	url = https://github.com/HamsterNote/DocumentKit.git
+[submodule "src/plugins/document/decoder/PdfDecoder"]
+	path = src/plugins/document/decoder/PdfDecoder
+	url = https://github.com/HamsterNote/PdfDecoder.git
